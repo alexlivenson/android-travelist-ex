@@ -14,7 +14,8 @@
     <ImageView
         android:id="@id/placeImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"/>
 
     <!--Used for the ripple effect on touch (selectableItemBackground)-->
     <LinearLayout
