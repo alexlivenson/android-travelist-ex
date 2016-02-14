@@ -49,7 +49,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
         @Override
         public void onClick(View view) {
             if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(itemView, getLayoutPosition());
+                mItemClickListener.onItemClick(itemView, getAdapterPosition());
             }
         }
     }
