@@ -4,10 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_detail"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- NOTE: shared elements between activities you want to transition should have same transitionName-->
         <ImageView
             android:id="@+id/placeImage"
             android:layout_width="match_parent"
@@ -66,6 +71,7 @@
             android:background="@drawable/btn_background"
             android:contentDescription="@null"
             android:elevation="@dimen/button_elevation"
+            android:alpha="0"
             android:src="@drawable/icn_add" />
 
     </FrameLayout>

@@ -7,7 +7,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Animatable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AlphaAnimation;
@@ -80,7 +84,22 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     }
 
     private void windowTransition() {
+        getWindow().setEnterTransition(makeEnterTransition());
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                super.onTransitionEnd(transition);
+                mAddButton.animate().alpha(1.0f);
+                getWindow().getEnterTransition().removeListener(this);
+            }
+        });
+    }
 
+    public static Transition makeEnterTransition() {
+        Transition fade = new Fade();
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        return fade;
     }
 
     private void addToDo(String todo) {
@@ -89,13 +108,18 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
     private void getPhoto() {
         Bitmap photo = BitmapFactory.decodeResource(getResources(), mPlace.getImageResourceId(this));
+        colorize(photo);
     }
 
     private void colorize(Bitmap photo) {
+        Palette mPalette = Palette.generate(photo);
+        applyPalette(mPalette);
     }
 
-    private void applyPalette() {
-
+    private void applyPalette(Palette mPalette) {
+        getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColor)));
+        mTitleHolder.setBackgroundColor(mPalette.getMutedColor(defaultColor));
+        mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColor));
     }
 
     @Override
